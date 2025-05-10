@@ -1,4 +1,12 @@
-"scripts": {
-    "start": "node app.js"
+{
+  "name": "backend-javascript-with-node.js",
+  "version": "1.0.0",
+  "description": "A backend project with Node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
-  
+}
