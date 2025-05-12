@@ -1,92 +1,278 @@
 #!/bin/bash
 
-# Bookshelf API Automated Test Script with Logging
-LOG_FILE="bookshelf_api_test_results.log"
-API_URL="http://localhost:9000"
+#  Script Otomatisasi Tes API Bookshelf dengan Logging
+#  Dokumentasi Lengkap Bahasa Indonesia
+#
+#  Script ini menjalankan serangkaian tes API untuk aplikasi Bookshelf dan mencatat
+#  hasilnya ke dalam file log. Anda dapat memilih tes individual atau menjalankan
+#  semua tes sekaligus.
+#
+#  Cara Penggunaan:
+#  1.  Simpan script ini sebagai file .sh (misalnya, `test_bookshelf_api.sh`).
+#  2.  Ubah permission agar bisa dieksekusi: `chmod +x test_bookshelf_api.sh`
+#  3.  Jalankan script: `./test_bookshelf_api.sh`
+#  4.  Ikuti petunjuk di menu untuk memilih tes yang ingin dijalankan.
+#
+#  Prasyarat:
+#  -   Aplikasi Bookshelf API harus sudah berjalan.
+#  -   Pastikan nilai-nilai variabel di dalam script sesuai dengan environment Anda.
+#      (Terutama `BASE_URL`, `NEW_BOOK_DATA`, dan `UPDATE_BOOK_DATA`).
+#  -   (Opsional) Install `jq` untuk memformat output JSON: `sudo apt install jq` (Debian/Ubuntu)
+#
+#  Output:
+#  -   Script akan menampilkan hasil setiap tes (status code, header, body) ke terminal
+#      dan juga mencatatnya ke file log.
+#  -   Nama file log akan berdasarkan tanggal dan waktu saat script dijalankan.
 
-echo "Running Bookshelf API tests..." | tee $LOG_FILE
+# Konfigurasi Environment (Ganti dengan nilai sesuai environment Anda)
+BASE_URL="http://localhost:9000"
 
-# 1. Add Book - success
-echo -e "\n==> Add Book - success" | tee -a $LOG_FILE
-curl -X POST $API_URL/books \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Buku A",
-    "year": 2020,
-    "author": "Penulis A",
-    "summary": "Ini ringkasan",
-    "publisher": "Penerbit A",
-    "pageCount": 100,
-    "readPage": 50,
-    "reading": true
-  }' | tee -a $LOG_FILE
+# Data untuk Add Book (Tes 1 & 2)
+NEW_BOOK_DATA='{
+  "name": "Buku A",
+  "year": 2010,
+  "author": "John Doe",
+  "summary": "Lorem ipsum dolor sit amet",
+  "publisher": "Dicoding Indonesia",
+  "pageCount": 100,
+  "readPage": 25,
+  "reading": false
+}'
 
-# 2. Add Book - fail (missing name)
-echo -e "\n==> Add Book - fail (missing name)" | tee -a $LOG_FILE
-curl -X POST $API_URL/books \
-  -H "Content-Type: application/json" \
-  -d '{
-    "year": 2020,
-    "author": "Penulis A",
-    "summary": "Ini ringkasan",
-    "publisher": "Penerbit A",
-    "pageCount": 100,
-    "readPage": 50,
-    "reading": true
-  }' | tee -a $LOG_FILE
+# Data untuk Update Book (Tes 9)
+UPDATE_BOOK_DATA='{
+  "name": "Buku A Revisi",
+  "year": 2011,
+  "author": "Jane Doe",
+  "summary": "Update: Lorem ipsum dolor",
+  "publisher": "Penerbit Maju Jaya",
+  "pageCount": 150,
+  "readPage": 50,
+  "reading": true
+}'
 
-# 3. Add Book - fail (readPage > pageCount)
-echo -e "\n==> Add Book - fail (readPage > pageCount)" | tee -a $LOG_FILE
-curl -X POST $API_URL/books \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Buku Salah",
-    "year": 2020,
-    "author": "Penulis Salah",
-    "summary": "Ini salah",
-    "publisher": "Penerbit Salah",
-    "pageCount": 100,
-    "readPage": 150,
-    "reading": true
-  }' | tee -a $LOG_FILE
+# Variabel Global untuk Menyimpan bookId
+BOOK_ID=""
+BOOK_ID_FINISHED=""
 
-# 4. Get All Books
-echo -e "\n==> Get All Books" | tee -a $LOG_FILE
-curl -X GET $API_URL/books | tee -a $LOG_FILE
+# Membuat Nama File Log Berdasarkan Tanggal dan Waktu
+LOG_FILE="bookshelf_api_test_$(date +'%Y%m%d_%H%M%S').log"
 
-# 5. Get Book by ID (replace 'book-id-not-found' later)
-echo -e "\n==> Get Book by ID (not found)" | tee -a $LOG_FILE
-curl -X GET $API_URL/books/book-id-not-found | tee -a $LOG_FILE
+# Fungsi untuk Menjalankan Tes dan Mencatat Log
+run_test() {
+  test_number="$1"
 
-# 6. Update Book by ID (replace 'book-id-not-found' later)
-echo -e "\n==> Update Book by ID (not found)" | tee -a $LOG_FILE
-curl -X PUT $API_URL/books/book-id-not-found \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Updated Book",
-    "year": 2021,
-    "author": "Updated Author",
-    "summary": "Updated Summary",
-    "publisher": "Updated Publisher",
-    "pageCount": 120,
-    "readPage": 60,
-    "reading": false
-  }' | tee -a $LOG_FILE
+  echo "========================================" | tee -a "$LOG_FILE"
+  echo "Menjalankan Tes $test_number: $test_descriptions[$test_number]" | tee -a "$LOG_FILE"
+  echo "========================================" | tee -a "$LOG_FILE"
 
-# 7. Delete Book by ID (replace 'book-id-not-found' later)
-echo -e "\n==> Delete Book by ID (not found)" | tee -a $LOG_FILE
-curl -X DELETE $API_URL/books/book-id-not-found | tee -a $LOG_FILE
+  case $test_number in
+    1)  # Tes 1: Add Book With Complete Data
+      response=$(curl -s -X POST "$BASE_URL/books" \
+                       -H 'Content-Type: application/json' \
+                       -d "$NEW_BOOK_DATA")
+      echo "$response" | jq | tee -a "$LOG_FILE"
 
-# 8. Get Books by Query (name)
-echo -e "\n==> Get Books by Query (name)" | tee -a $LOG_FILE
-curl -X GET "$API_URL/books?name=buku" | tee -a $LOG_FILE
+      # Ekstrak bookId dari response (untuk tes selanjutnya)
+      BOOK_ID=$(echo "$response" | jq -r '.data.bookId')
+      ;;
 
-# 9. Get Books by Query (reading = 1)
-echo -e "\n==> Get Books by Query (reading = 1)" | tee -a $LOG_FILE
-curl -X GET "$API_URL/books?reading=1" | tee -a $LOG_FILE
+    2)  # Tes 2: Add Book With Finished Reading
+      NEW_BOOK_DATA_FINISHED='{
+        "name": "Buku B",
+        "year": 2024,
+        "author": "Jane Doe",
+        "summary": "Buku tentang petualangan seru",
+        "publisher": "Penerbit Maju",
+        "pageCount": 100,
+        "readPage": 100,
+        "reading": true
+      }'
+      response=$(curl -s -X POST "$BASE_URL/books" \
+                       -H 'Content-Type: application/json' \
+                       -d "$NEW_BOOK_DATA_FINISHED")
+      echo "$response" | jq | tee -a "$LOG_FILE"
 
-# 10. Get Books by Query (finished = 0)
-echo -e "\n==> Get Books by Query (finished = 0)" | tee -a $LOG_FILE
-curl -X GET "$API_URL/books?finished=0" | tee -a $LOG_FILE
+      BOOK_ID_FINISHED=$(echo "$response" | jq -r '.data.bookId')
+      ;;
 
-echo -e "\nAll tests finished. Output saved to $LOG_FILE"
+    3)  # Tes 3: Add Book Without Name
+      NEW_BOOK_DATA_WITHOUT_NAME='{
+        "year": 2010,
+        "author": "John Doe",
+        "summary": "Lorem ipsum dolor sit amet",
+        "publisher": "Dicoding Indonesia",
+        "pageCount": 100,
+        "readPage": 25,
+        "reading": false
+      }'
+      curl -s -X POST "$BASE_URL/books" \
+           -H 'Content-Type: application/json' \
+           -d "$NEW_BOOK_DATA_WITHOUT_NAME" | jq | tee -a "$LOG_FILE"
+      ;;
+
+    4)  # Tes 4: Add Book with Page Read More Than Page Count
+      NEW_BOOK_DATA_INVALID_PAGE='{
+        "name": "Buku C",
+        "year": 2023,
+        "author": "Anonim",
+        "summary": "Misteri di pulau terpencil",
+        "publisher": "Pustaka Abadi",
+        "pageCount": 80,
+        "readPage": 90,
+        "reading": true
+      }'
+      curl -s -X POST "$BASE_URL/books" \
+           -H 'Content-Type: application/json' \
+           -d "$NEW_BOOK_DATA_INVALID_PAGE" | jq | tee -a "$LOG_FILE"
+      ;;
+
+    5)  # Tes 5: Get All Books
+      curl -s "$BASE_URL/books" | jq | tee -a "$LOG_FILE"
+      ;;
+
+    6)  # Tes 6: Get Detail Books With Correct Id
+      curl -s "$BASE_URL/books/$BOOK_ID" | jq | tee -a "$LOG_FILE"
+      ;;
+
+    7)  # Tes 7: Get Detail Finished Book
+      curl -s "$BASE_URL/books/$BOOK_ID_FINISHED" | jq | tee -a "$LOG_FILE"
+      ;;
+
+    8)  # Tes 8: Get Detail Books With Invalid Id
+      curl -s "$BASE_URL/books/xxxxx" | jq | tee -a "$LOG_FILE"
+      ;;
+
+    9)  # Tes 9: Update Book With Complete Data
+      curl -s -X PUT "$BASE_URL/books/$BOOK_ID" \
+           -H 'Content-Type: application/json' \
+           -d "$UPDATE_BOOK_DATA" | jq | tee -a "$LOG_FILE"
+
+      # Verifikasi Update (Opsional)
+      echo "Verifikasi Update (GET detail buku setelah update):" | tee -a "$LOG_FILE"
+      curl -s "$BASE_URL/books/$BOOK_ID" | jq | tee -a "$LOG_FILE"
+      ;;
+
+    10) # Tes 10: Update Book Without Name
+      UPDATE_BOOK_DATA_WITHOUT_NAME='{
+        "year": 2011,
+        "author": "Jane Doe",
+        "summary": "Update: Lorem ipsum dolor",
+        "publisher": "Penerbit Maju Jaya",
+        "pageCount": 150,
+        "readPage": 50,
+        "reading": true
+      }'
+      curl -s -X PUT "$BASE_URL/books/$BOOK_ID" \
+           -H 'Content-Type: application/json' \
+           -d "$UPDATE_BOOK_DATA_WITHOUT_NAME" | jq | tee -a "$LOG_FILE"
+      ;;
+
+    11) # Tes 11: Update Book With Page Read More Than Page Count
+      UPDATE_BOOK_DATA_INVALID_PAGE='{
+        "name": "Buku A Revisi",
+        "year": 2011,
+        "author": "Jane Doe",
+        "summary": "Update: Lorem ipsum dolor",
+        "publisher": "Penerbit Maju Jaya",
+        "pageCount": 80,
+        "readPage": 90,
+        "reading": true
+      }'
+      curl -s -X PUT "$BASE_URL/books/$BOOK_ID" \
+           -H 'Content-Type: application/json' \
+           -d "$UPDATE_BOOK_DATA_INVALID_PAGE" | jq | tee -a "$LOG_FILE"
+      ;;
+
+    12) # Tes 12: Update Book with Invalid Id
+      curl -s -X PUT "$BASE_URL/books/xxxxx" \
+           -H 'Content-Type: application/json' \
+           -d "$UPDATE_BOOK_DATA" | jq | tee -a "$LOG_FILE"
+      ;;
+
+    13) # Tes 13: Delete Book With Correct Id
+      curl -s -X DELETE "$BASE_URL/books/$BOOK_ID" | jq | tee -a "$LOG_FILE"
+
+      # Verifikasi Delete (Opsional)
+      echo "Verifikasi Delete (GET detail buku setelah delete):" | tee -a "$LOG_FILE"
+      curl -s "$BASE_URL/books/$BOOK_ID" | jq | tee -a "$LOG_FILE"
+      ;;
+
+    14) # Tes 14: Delete Book With Invalid Id
+      curl -s -X DELETE "$BASE_URL/books/xxxxx" | jq | tee -a "$LOG_FILE"
+      ;;
+
+    15) # Tes 15: Get Books with Name
+      curl -s "$BASE_URL/books?name=Dicoding" | jq | tee -a "$LOG_FILE"
+      ;;
+
+    16)  # Tes 16: Jalankan Semua Tes
+      run_all_tests
+      ;;
+
+    *)  # Opsi Tidak Valid
+      echo "Opsi tidak valid." | tee -a "$LOG_FILE"
+      ;;
+  esac
+}
+
+# Fungsi untuk Menjalankan Semua Tes
+run_all_tests() {
+  for i in $(seq 1 15); do
+    run_test $i
+    echo "Selesai Tes $i. Tekan Enter untuk melanjutkan..."
+    read -r -n 1 -s -p ""
+    echo "" | tee -a "$LOG_FILE" # Tambahkan baris kosong ke log setelah setiap tes
+  done
+}
+
+# Daftar Deskripsi Tes
+declare -A test_descriptions
+test_descriptions[1]="Add Book With Complete Data"
+test_descriptions[2]="Add Book With Finished Reading"
+test_descriptions[3]="Add Book Without Name"
+test_descriptions[4]="Add Book with Page Read More Than Page Count"
+test_descriptions[5]="Get All Books"
+test_descriptions[6]="Get Detail Books With Correct Id"
+test_descriptions[7]="Get Detail Finished Book"
+test_descriptions[8]="Get Detail Books With Invalid Id"
+test_descriptions[9]="Update Book With Complete Data"
+test_descriptions[10]="Update Book Without Name"
+test_descriptions[11]="Update Book With Page Read More Than Page Count"
+test_descriptions[12]="Update Book with Invalid Id"
+test_descriptions[13]="Delete Book With Correct Id"
+test_descriptions[14]="Delete Book With Invalid Id"
+test_descriptions[15]="Get Books with Name"
+test_descriptions[16]="Jalankan Semua Tes"
+
+# Menu Utama
+show_menu() {
+  echo "========================================"
+  echo "  Selamat Datang di Script Tes API Bookshelf"
+  echo "========================================"
+  echo "Pilih tes yang ingin dijalankan:"
+  for i in $(seq 1 16); do
+    echo "$i. ${test_descriptions[$i]}"
+  done
+  echo "0. Keluar"
+  echo "Masukkan nomor tes: "
+  read -r test_choice
+}
+
+# Main Program
+while true; do
+  show_menu | tee -a "$LOG_FILE" # Catat menu ke log
+  if [[ "$test_choice" -eq 0 ]]; then
+    echo "Keluar dari script." | tee -a "$LOG_FILE"
+    break
+  elif [[ "$test_choice" -ge 1 && "$test_choice" -le 16 ]]; then
+    run_test "$test_choice"
+  else
+    echo "Pilihan tidak valid. Silakan coba lagi." | tee -a "$LOG_FILE"
+  fi
+  echo "" | tee -a "$LOG_FILE" # Tambahkan baris kosong ke log setelah setiap iterasi
+done
+
+echo "Semua tes selesai. Hasil tes dicatat di file: $LOG_FILE" | tee -a "$LOG_FILE"
+
+exit 0
