@@ -2,11 +2,15 @@
   "name": "backend-javascript-with-node.js",
   "version": "1.0.0",
   "description": "A backend project with Node.js",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.18.2",
+    "nanoid": "3.3.4"
+  },
+  "engines": {
+    "node": "10.x"
   }
 }
