@@ -1,159 +1,172 @@
-#   Bookshelf API - Postman Collection
+#   📚 Bookshelf API - Koleksi Postman
 
 [![Awesome Project](https://img.shields.io/badge/Awesome-Project-brightgreen.svg)](https://github.com/your-github-username/your-repo-name)
 [![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg)](https://github.com/your-github-username/your-repo-name/releases)
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/your-github-username/your-repo-name/blob/main/LICENSE)
 
-A meticulously crafted Postman collection for testing the Bookshelf API. This collection provides a comprehensive suite of tests to ensure the API's robustness and reliability.
+Sebuah koleksi Postman yang dibuat dengan cermat untuk menguji Bookshelf API. Koleksi ini menyediakan serangkaian pengujian lengkap untuk memastikan ketahanan dan keandalan API.
 
-##   ?  Elegant Introduction
+##   ✨ Pendahuluan yang Elegan
 
-Embark on a seamless journey to validate your Bookshelf API with this thoughtfully designed Postman collection.  Each test case is crafted with precision, ensuring every facet of your API behaves as expected. From adding new literary treasures to retrieving detailed information and managing updates, this collection is your trusted companion.
+Mulailah perjalanan tanpa hambatan untuk memvalidasi Bookshelf API Anda dengan koleksi Postman yang dirancang dengan saksama ini. Setiap kasus pengujian dibuat dengan presisi, memastikan setiap aspek API Anda berfungsi seperti yang diharapkan. Mulai dari menambahkan buku-buku baru hingga mengambil informasi detail dan mengelola pembaruan, koleksi ini adalah rekan terpercaya Anda.
 
-##   ??  Table of Contents
+##   📖 Daftar Isi
 
--   [Features](#features)
--   [Getting Started](#getting-started)
-    -   [Prerequisites](#prerequisites)
-    -   [Installation](#installation)
-    -   [Environment Setup](#environment-setup)
--   [Collection Overview](#collection-overview)
-    -   [Adding Books](#adding-books)
-    -   [Retrieving Books](#retrieving-books)
-    -   [Updating Books](#updating-books)
-    -   [Deleting Books](#deleting-books)  **(Bonus)**
--   [Environment Variables](#environment-variables)
--   [Testing Philosophy](#testing-philosophy)
--   [Contributing](#contributing)
--   [License](#license)
--   [Acknowledgments](#acknowledgments)
+-   [Fitur](#fitur)
+-   [Mulai](#mulai)
+    -   [Prasyarat](#prasyarat)
+    -   [Instalasi](#instalasi)
+    -   [Pengaturan Environment](#pengaturan-environment)
+-   [Gambaran Umum Koleksi](#gambaran-umum-koleksi)
+    -   [Menambah Buku](#menambah-buku)
+    -   [Mengambil Buku](#mengambil-buku)
+    -   [Memperbarui Buku](#memperbarui-buku)
+    -   [Menghapus Buku](#menghapus-buku) **(Bonus)**
+-   [Variabel Environment](#variabel-environment)
+-   [Filosofi Pengujian](#filosofi-pengujian)
+-   [Berkontribusi](#berkontribusi)
+-   [Lisensi](#lisensi)
+-   [Ucapan Terima Kasih](#ucapan-terima-kasih)
 
-##   ??  Features
+##   🌟 Fitur
 
-This Postman collection offers a wide range of tests, covering essential Bookshelf API functionalities:
+Koleksi Postman ini menawarkan berbagai pengujian, mencakup fungsionalitas penting Bookshelf API:
 
--   **Adding Books:**
-    -   Adding books with complete data.
-    -   Handling scenarios with missing book names.
-    -   Validating `readPage` against `pageCount`.
--   **Retrieving Books:**
-    -   Fetching all books with concise details.
-    -   Retrieving detailed information for a specific book.
-    -   Handling cases where a book ID is invalid.
--   **Updating Books:**
-    -   Updating book details with comprehensive data.
-    -   Managing updates when the book's `name` is missing.
-    -   Ensuring `readPage` doesn't exceed `pageCount` during updates.
--   **Deleting Books:** **(Bonus - Included in Pre-request Script)**
-    -   Efficiently deleting books.
+-   **Menambah Buku:**
+    -   Menambah buku dengan data lengkap.
+    -   Menangani skenario dengan nama buku yang hilang.
+    -   Memvalidasi `readPage` terhadap `pageCount`.
+-   **Mengambil Buku:**
+    -   Mengambil semua buku dengan detail ringkas.
+    -   Mengambil informasi detail untuk buku tertentu.
+    -   Menangani kasus di mana ID buku tidak valid.
+-   **Memperbarui Buku:**
+    -   Memperbarui detail buku dengan data lengkap.
+    -   Mengelola pembaruan saat nama buku hilang.
+    -   Memastikan `readPage` tidak melebihi `pageCount` selama pembaruan.
+-   **Menghapus Buku:** **(Bonus - Termasuk dalam Skrip Pra-permintaan)**
+    -   Menghapus buku secara efisien.
 
-##   ??  Getting Started
+##   🚀 Mulai
 
-###   Prerequisites
+###   Prasyarat
 
-Before you begin, ensure you have the following installed:
+Sebelum memulai, pastikan Anda telah menginstal yang berikut:
 
--   **Postman:** The latest version of the Postman application.  You can download it from [https://www.postman.com/downloads/](https://www.postman.com/downloads/)
--   **Bookshelf API:** A running instance of the Bookshelf API you wish to test.
+-   **Postman:** Versi terbaru aplikasi Postman. Anda dapat mengunduhnya dari [https://www.postman.com/downloads/](https://www.postman.com/downloads/)
+-   **Bookshelf API:** Instance Bookshelf API yang sedang berjalan dan ingin Anda uji.
 
-###   Installation
+###   Instalasi
 
-1.  **Clone the repository:**
+1.  **Klon repositori:**
     ```bash
     git clone <your-repository-url>
     cd <your-repository-directory>
     ```
-2.  **Import the collection:**
-    -   Open Postman.
-    -   Click on "Import".
-    -   Select the `Bookshelf API Test.postman_collection.json` file.
+2.  **Impor koleksi:**
+    -   Buka Postman.
+    -   Klik "Impor".
+    -   Pilih file `Bookshelf API Test.postman_collection.json`.
 
-###   Environment Setup
+###   Pengaturan Environment
 
-1.  **Import the environment:**
-    -   In Postman, click on "Import".
-    -   Select the `Bookshelf API Test.postman_environment.json` file.
-2.  **Configure the environment variables:**
-    -   Select the "Bookshelf API Test" environment from the dropdown.
-    -   Edit the environment variables:
-        -   `port`:  Set this to the port where your Bookshelf API is running (e.g., `9000`).
-        -   Optionally, you can modify the default values for book properties like `newName`, `newAuthor`, etc., to suit your testing needs.
+1.  **Impor environment:**
+    -   Di Postman, klik "Impor".
+    -   Pilih file `Bookshelf API Test.postman_environment.json`.
+2.  **Konfigurasi variabel environment:**
+    -   Pilih environment "Bookshelf API Test" dari dropdown.
+    -   Edit variabel environment:
+        -   `port`: Atur ini ke port tempat Bookshelf API Anda berjalan (misalnya, `9000`).
+        -   Secara opsional, Anda dapat memodifikasi nilai default untuk properti buku seperti `newName`, `newAuthor`, dll., sesuai kebutuhan pengujian Anda.
 
-##   ??  Collection Overview
+##   📦 Gambaran Umum Koleksi
 
-###   Adding Books
+###   Menambah Buku
 
--   **[Mandatory] Add Book With Complete Data:** Tests successful book creation with all required fields.
--   **[Mandatory] Add Book With Finished Reading:** Verifies book creation when `readPage` equals `pageCount`.
--   **[Mandatory] Add Book Without Name:** Ensures the API correctly rejects book creation when the `name` field is missing.
--   **[Mandatory] Add Book with Page Read More Than Page Count:** Validates that the API prevents creating books where `readPage` exceeds `pageCount`.
+-   **[Wajib] Tambah Buku Dengan Data Lengkap:** Menguji keberhasilan pembuatan buku dengan semua bidang yang diperlukan.
+-   **[Wajib] Tambah Buku Dengan Selesai Dibaca:** Memverifikasi pembuatan buku saat `readPage` sama dengan `pageCount`.
+-   **[Wajib] Tambah Buku Tanpa Nama:** Memastikan API dengan benar menolak pembuatan buku saat bidang `name` hilang.
+-   **[Wajib] Tambah Buku dengan Halaman Dibaca Lebih Banyak dari Jumlah Halaman:** Memvalidasi bahwa API mencegah pembuatan buku di mana `readPage` melebihi `pageCount`.
 
-###   Retrieving Books
+###   Mengambil Buku
 
--   **[Mandatory] Get All Books:** Retrieves a list of all books, verifying the response structure.
--   **[Mandatory] Get Detail Books With Correct Id:** Fetches detailed information for a specific book using its ID.
--   **[Mandatory] Get Detail Finished Book:** Retrieves details for a book marked as finished (readPage = pageCount).
--   **[Mandatory] Get Detail Books With Invalid Id:** Confirms the API's behavior when an invalid book ID is provided.
+-   **[Wajib] Ambil Semua Buku:** Mengambil daftar semua buku, memverifikasi struktur respons.
+-   **[Wajib] Ambil Detail Buku Dengan ID yang Benar:** Mengambil informasi detail untuk buku tertentu menggunakan ID-nya.
+-   **[Wajib] Ambil Detail Buku Selesai Dibaca:** Mengambil detail untuk buku yang ditandai selesai (readPage = pageCount).
+-   **[Wajib] Ambil Detail Buku Dengan ID Tidak Valid:** Mengonfirmasi perilaku API saat ID buku yang tidak valid diberikan.
 
-###   Updating Books
+###   Memperbarui Buku
 
--   **[Mandatory] Update Book With Complete Data:** Tests the successful modification of book details.
--   **[Mandatory] Update Book Without Name:** Checks if the API handles updates correctly when the book's `name` is missing.
--   **[Mandatory] Update Book With Page Read More Than Page Count:** Validates the API's response when trying to update a book with `readPage` greater than `pageCount`.
--   **[Mandatory] Update Book with Invalid Id:** Verifies that the API returns an error when attempting to update a book with an ID that does not exist.
+-   **[Wajib] Perbarui Buku Dengan Data Lengkap:** Menguji keberhasilan modifikasi detail buku.
+-   **[Wajib] Perbarui Buku Tanpa Nama:** Memeriksa apakah API menangani pembaruan dengan benar saat `name` buku hilang.
+-   **[Wajib] Perbarui Buku Dengan Halaman Dibaca Lebih Banyak dari Jumlah Halaman:** Memvalidasi respons API saat mencoba memperbarui buku dengan `readPage` lebih besar dari `pageCount`.
+-   **[Wajib] Perbarui Buku dengan ID Tidak Valid:** Memverifikasi bahwa API mengembalikan error saat mencoba memperbarui buku dengan ID yang tidak ada.
 
-###   Deleting Books  **(Bonus)**
+###   Menghapus Buku **(Bonus)**
 
--   **[Bonus] Delete All Books:** This request is included as a pre-request script in the "Get All Books" request.  It efficiently cleans up all books in the database before fetching the list, ensuring a consistent testing environment.  This showcases an advanced Postman technique for managing test data.
+-   **[Bonus] Hapus Semua Buku:** Permintaan ini termasuk sebagai skrip pra-permintaan dalam permintaan "Ambil Semua Buku". Ini secara efisien membersihkan semua buku dalam database sebelum mengambil daftar, memastikan lingkungan pengujian yang konsisten. Ini menunjukkan teknik Postman tingkat lanjut untuk mengelola data pengujian.
 
-##   ??  Environment Variables
+##   ⚙️ Variabel Environment
 
-The `Bookshelf API Test.postman_environment.json` file contains the following key variables:
+File `Bookshelf API Test.postman_environment.json` berisi variabel-variabel kunci berikut:
 
-| Variable                     | Description                                                          | Default Value                        |
-| :--------------------------- | :------------------------------------------------------------------- | :----------------------------------- |
-| `port`                       | The port where the Bookshelf API is running.                         | `9000`                               |
-| `bookId`                     | (Generated) The ID of a newly created book.                          | *Empty* |
-| `bookIdWithFinishedReading`   | (Generated) ID of a book with finished reading.                     | *Empty* |
-| `newName`                    | The name of a new book.                                              | `Buku A`                             |
-| `newYear`                    | The publication year of a new book.                                  | `2010`                               |
-| `newAuthor`                  | The author of a new book.                                            | `John Doe`                           |
-| `newSummary`                 | The summary of a new book.                                           | `Lorem ipsum dolor sit amet`           |
-| `newPublisher`               | The publisher of a new book.                                         | `Dicoding Indonesia`                 |
-| `newPageCount`               | The total number of pages in a new book.                             | `100`                                |
-| `newReadPage`                | The number of pages read in a new book.                               | `25`                                 |
-| `newReading`                 | Whether the book is currently being read.                             | `false`                              |
-| `updateName`                 | The updated name of a book.                                          | `Buku A Revisi`                      |
-| `updateYear`                 | The updated publication year of a book.                              | `2011`                               |
-| `updateAuthor`               | The updated author of a book.                                        | `Jane Doe`                           |
-| `updateSummary`                | The updated summary of a book.                                         | `Updated Lorem Ipsum`                |
-| `updatePublisher`              | The updated publisher of a book.                                       | `Dicoding Academy`                   |
-| `updatePageCount`              | The updated total number of pages in a book.                         | `120`                                |
-| `updateReadPage`               | The updated number of pages read in a book.                           | `30`                                 |
-| `updateReading`                | Whether the book is currently being read (updated).                   | `true`                               |
+| Variabel                      | Deskripsi                                                                  | Nilai Default                       |
+| :---------------------------- | :------------------------------------------------------------------------- | :---------------------------------- |
+| `port`                        | Port tempat Bookshelf API berjalan.                                        | `9000`                              |
+| `bookId`                      | (Dihasilkan) ID buku yang baru dibuat.                                      | *Kosong* |
+| `bookIdWithFinishedReading`   | (Dihasilkan) ID buku dengan status selesai dibaca.                          | *Kosong* |
+| `newName`                     | Nama buku baru.                                                            | `Buku A`                            |
+| `newYear`                     | Tahun publikasi buku baru.                                                  | `2010`                              |
+| `newAuthor`                   | Penulis buku baru.                                                          | `John Doe`                          |
+| `newSummary`                  | Ringkasan buku baru.                                                        | `Lorem ipsum dolor sit amet`          |
+| `newPublisher`                | Penerbit buku baru.                                                         | `Dicoding Indonesia`                |
+| `newPageCount`                | Jumlah total halaman dalam buku baru.                                       | `100`                               |
+| `newReadPage`                 | Jumlah halaman yang dibaca dalam buku baru.                                 | `25`                                |
+| `newReading`                  | Apakah buku sedang dibaca saat ini.                                          | `false`                             |
+| `updateName`                  | Nama buku yang diperbarui.                                                  | `Buku A Revisi`                     |
+| `updateYear`                  | Tahun publikasi buku yang diperbarui.                                       | `2011`                              |
+| `updateAuthor`                | Penulis buku yang diperbarui.                                               | `Jane Doe`                          |
+| `updateSummary`                 | Ringkasan buku yang diperbarui.                                             | `Updated Lorem Ipsum`               |
+| `updatePublisher`               | Penerbit buku yang diperbarui.                                              | `Dicoding Academy`                  |
+| `updatePageCount`               | Jumlah total halaman dalam buku yang diperbarui.                             | `120`                               |
+| `updateReadPage`                | Jumlah halaman yang dibaca dalam buku yang diperbarui.                       | `30`                                |
+| `updateReading`                 | Apakah buku sedang dibaca saat ini (setelah diperbarui).                    | `true`                              |
 
-##   ??  Testing Philosophy
+##   🧪 Filosofi Pengujian
 
-This collection adheres to a philosophy of thorough and precise testing.  Each test case is designed to validate specific aspects of the API, providing clear and actionable feedback.  Assertions are used extensively to ensure responses match expected outcomes, covering status codes, headers, and response body content.
+Koleksi ini menganut filosofi pengujian yang menyeluruh dan tepat. Setiap kasus pengujian dirancang untuk memvalidasi aspek spesifik API, memberikan umpan balik yang jelas dan dapat ditindaklanjuti. Assertions digunakan secara ekstensif untuk memastikan respons sesuai dengan hasil yang diharapkan, mencakup kode status, header, dan konten body respons.
 
-##   ??  Contributing
+##   🤝 Berkontribusi
 
-Contributions are welcome!  If you have suggestions for new test cases, improvements to existing ones, or any other enhancements, please feel free to:
+Kontribusi dipersilakan! Jika Anda memiliki saran untuk kasus pengujian baru, perbaikan pada yang sudah ada, atau peningkatan lainnya, jangan ragu untuk:
 
-1.  Fork the repository.
-2.  Create a new branch for your feature or bug fix.
-3.  Make your changes.
-4.  Submit a pull request.
+1.  Fork repositori.
+2.  Buat branch baru untuk fitur atau perbaikan bug Anda.
+3.  Lakukan perubahan Anda.
+4.  Kirim pull request.
 
-##   ??  License
+##   📜 Lisensi
 
-This project is licensed under the MIT License.  See the `LICENSE` file for details.
+Proyek ini dilisensikan di bawah Lisensi MIT. Lihat file `LICENSE` untuk detailnya.
 
-##   ??  Acknowledgments
+##   🙏 Ucapan Terima Kasih
 
--   Special thanks to the developers of the Bookshelf API for creating such a wonderful platform.
--   Thanks to the Postman team for providing an excellent tool for API testing.
+-   Terima kasih khusus kepada para pengembang Bookshelf API karena telah menciptakan platform yang luar biasa ini.
+-   Terima kasih kepada tim Postman karena telah menyediakan alat yang sangat baik untuk pengujian API.
 
 ---
 
-**Note:** Replace `<your-github-username>` and `<your-repo-name>` with your actual GitHub information.  Feel free to further customize this `README.md` to perfectly match your project's style and needs!
+**Catatan:** 
+
+Jangan ragu untuk menyesuaikan lebih lanjut `README.md` ini agar sesuai dengan gaya dan kebutuhan proyek Anda!
+
+---
+
+## 👨‍💻 Kontributor
+
+**Afrinaldi**  
+📍 [GitHub](https://github.com/afrinaldipdg) • [LinkedIn](https://www.linkedin.com/in/afrinaldi1983/)
+
+---
+
+Happy testing! 🚀 
